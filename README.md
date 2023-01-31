@@ -1,1 +1,2 @@
-Some [Quera](https://quera.ir) solved questions
+# Quera
+### Some [Quera](https://quera.ir) solved questions
