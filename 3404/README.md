@@ -1,0 +1,1 @@
+# [3404](https://quera.org/problemset/3404/)
