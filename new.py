@@ -21,7 +21,7 @@ def main() -> str:
             README_TEMPLATE.format(id=args.id)
         ),
         (
-            NAME.get(args.ext, f"{args.id}.{args.ext}"),
+            args.file_name or NAME.get(args.ext, f"{args.id}.{args.ext}"),
             ""
         )
     )
@@ -40,6 +40,7 @@ if __name__ == '__main__':
     parser = ArgumentParser()
     parser.add_argument("id", type=int, help="problem-set ID")
     parser.add_argument("ext", type=str, help="source file extension")
+    parser.add_argument("--file-name", type=str, help="Custom file name")
     args = parser.parse_args()
 
     print(main())
