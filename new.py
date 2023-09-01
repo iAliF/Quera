@@ -1,10 +1,30 @@
 import os
 from argparse import ArgumentParser
 
-NAME = {
-    "cs": "Program.cs"
-}
+TEST_FILE_TEMPLATE = """import unittest
+
+
+class Test(unittest.TestCase):
+    def test_one(self) -> None:
+        pass
+
+
+if __name__ == '__main__':
+    unittest.main()
+"""
 README_TEMPLATE = "# [{id}](https://quera.org/problemset/{id}/)"
+
+DATA = {
+    "cs": {
+        "name": "Program.cs"
+    },
+    "py": {
+        "name": lambda p_id: f"q_{p_id}.py",
+        "extra": {
+            "test.py": TEST_FILE_TEMPLATE
+        }
+    }
+}
 
 
 def main() -> str:
@@ -21,12 +41,21 @@ def main() -> str:
             README_TEMPLATE.format(id=args.id)
         ),
         (
-            args.file_name or NAME.get(args.ext, f"{args.id}.{args.ext}"),
+            args.file_name or DATA.get(args.ext, {}).get("name", f"{args.id}.{args.ext}"),
             ""
+        ),
+        *(
+            (
+                key,
+                value
+            ) for key, value in DATA.get(args.ext, {}).get("extra", {}).items()
         )
     )
 
     for file_name, data in files_to_write:
+        if not isinstance(file_name, str):
+            file_name = file_name(args.id)
+
         with open(
                 os.path.join(s_id, file_name),
                 "w"
