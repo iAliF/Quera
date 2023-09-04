@@ -46,9 +46,11 @@ def main() -> str:
         ),
         *(
             (
-                key,
-                value
-            ) for key, value in DATA.get(args.ext, {}).get("extra", {}).items()
+                (
+                    key,
+                    value
+                ) for key, value in DATA.get(args.ext, {}).get("extra", {}).items()
+            ) if not args.no_extra else ()
         )
     )
 
@@ -70,6 +72,7 @@ if __name__ == '__main__':
     parser.add_argument("id", type=int, help="problem-set ID")
     parser.add_argument("ext", type=str, help="source file extension")
     parser.add_argument("--file-name", type=str, help="Custom file name")
+    parser.add_argument("--no-extra", action='store_true', help="Avoid creating extra files")
     args = parser.parse_args()
 
     print(main())
