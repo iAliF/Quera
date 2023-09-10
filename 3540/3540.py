@@ -10,12 +10,12 @@ if n % x == 0:
 elif n % y == 0:
     print(0, n // y)
 else:
-    xc = yc = 0
-    while (xc * x + yc * y) < n:
-        xc += 1
+    xs = 0
+    while xs < n:
+        xs += x
 
-        if (r := (n - xc * x)) % y == 0:
-            print(xc, r // y)
+        if (r := (n - xs)) % y == 0:
+            print(xs // x, r // y)
             exit()
 
-print(-1)
+    print(-1)
